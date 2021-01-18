@@ -1,8 +1,9 @@
 <#
+VERSION: 1.1
     .SYNOPSIS
         NAME: Export-AndParseHipsFile
         AUTHOR: Eric Powers EricPow@microsoft.com 
-        VERSION: 1.0
+        
 
         
         Notice: Any links, references, or attachments that contain sample scripts, code, or commands comes 

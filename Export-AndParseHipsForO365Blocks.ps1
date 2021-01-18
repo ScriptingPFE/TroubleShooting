@@ -268,7 +268,14 @@ Function Get-WhoIs {
         Write-Verbose "Ending $($MyInvocation.Mycommand)"
     } #end
 }
-    
+[int]$scriptversion = 1.1 
+[int]$CurrentPublishedVersion = ((Invoke-WebRequest -uri 'https://raw.githubusercontent.com/ScriptingPFE/TroubleShooting/main/Export-AndParseHipsForO365Blocks.ps1' -MaximumRedirection 100  ).parsedhtml.body.innertext.substring(2,13).trim() -split ":")[1]
+if($CurrentPublishedVersion -gt $scriptversion){
+    Write-host -ForegroundColor Yellow "The script you are currrently running has been updated. Please visit the Github link below for the current version of the code."
+    Write-Host 'https://raw.githubusercontent.com/ScriptingPFE/TroubleShooting/main/Export-AndParseHipsForO365Blocks.ps1'
+    pause 
+}
+
 $UniqueBlocks = @{ }
 $O365URlIndex = @{ }
 $O365IPIndex = @{ }
@@ -276,8 +283,7 @@ $O365IPIndex = @{ }
 if (!(Test-Path "$env:USERPROFILE\Desktop\O365Networks\")) {
     New-Item "$env:USERPROFILE\Desktop\O365Networks\" -ItemType Directory | Out-Null
 }
-    
-    
+      
 $webclient = [System.Net.WebClient]::new()
 $webclient.DownloadFile('https://endpoints.office.com/endpoints/worldwide?clientrequestid=b10c5ed1-bad1-445f-b386-b919946339a7', "$env:USERPROFILE\Desktop\O365Networks\O365CommonNetworkRequirements.json")
 $webclient.DownloadFile('https://endpoints.office.com/endpoints/USGOVDoD?clientrequestid=b10c5ed1-bad1-445f-b386-b919946339a7', "$env:USERPROFILE\Desktop\O365Networks\O365USDODNetworkRequirements.json")

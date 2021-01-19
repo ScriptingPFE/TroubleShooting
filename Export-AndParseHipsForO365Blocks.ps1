@@ -1,5 +1,5 @@
 <#
-VERSION: 1.1
+VERSION: 1.2
     .SYNOPSIS
         NAME: Export-AndParseHipsFile
         AUTHOR: Eric Powers EricPow@microsoft.com 
@@ -269,12 +269,15 @@ Function Get-WhoIs {
         Write-Verbose "Ending $($MyInvocation.Mycommand)"
     } #end
 }
-[int]$scriptversion = 1.1 
-[int]$CurrentPublishedVersion = ((Invoke-WebRequest -uri 'https://raw.githubusercontent.com/ScriptingPFE/TroubleShooting/main/Export-AndParseHipsForO365Blocks.ps1' -MaximumRedirection 100  ).parsedhtml.body.innertext.substring(2,13).trim() -split ":")[1]
-if($CurrentPublishedVersion -gt $scriptversion){
-    Write-host -ForegroundColor Yellow "The script you are currrently running has been updated. Please visit the Github link below for the current version of the code."
-    Write-Host 'https://raw.githubusercontent.com/ScriptingPFE/TroubleShooting/main/Export-AndParseHipsForO365Blocks.ps1'
-    pause 
+[Double]$scriptversion = 1.2 
+if(Test-NetConnection -ComputerName raw.githubusercontent.com -Port 443 -ErrorAction SilentlyContinue -InformationLevel Quiet){
+    [Double]$CurrentPublishedVersion = ((Invoke-WebRequest -uri 'https://raw.githubusercontent.com/ScriptingPFE/TroubleShooting/main/Export-AndParseHipsForO365Blocks.ps1' -MaximumRedirection 100  ).parsedhtml.body.innertext.substring(2,13).trim() -split ":")[1]
+
+    if($CurrentPublishedVersion -gt $scriptversion){
+        Write-host -ForegroundColor Yellow "The script you are currrently running has been updated. Please visit the Github link below for the current version of the code."
+        Write-Host 'https://raw.githubusercontent.com/ScriptingPFE/TroubleShooting/main/Export-AndParseHipsForO365Blocks.ps1'
+        pause
+    }
 }
 
 $UniqueBlocks = @{ }

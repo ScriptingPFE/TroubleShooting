@@ -401,7 +401,7 @@ Foreach ($UniqueBlock in $UniqueBlocks.Keys) {
                     RequiredIPRange         = ([string]($O365IPIndex[$network].ips).trim() -replace " ", ", ")
                     RequiredtcpPorts        = $O365IPIndex[$network].tcpPorts
                     category                = $O365IPIndex[$network].category
-                    Requiredurls            = ([string]($O365IPIndex[$network].urls).trim() -replace " ", ", ") 
+                    Requiredurls            = if($O365IPIndex[$network].urls){([string]($O365IPIndex[$network].urls).trim() -replace " ", ", ")}else{""}
                 }
                 $BlockedO365Entry
                 $BlockedO365Entry | Export-Csv "$env:USERPROFILE\Desktop\Blocked_O365_Endpoints_$(Get-Date -Format MM-dd-yyyy).csv" -NoTypeInformation -Append
